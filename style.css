@@ -1,45 +1,228 @@
-
-html {
-    font-size: 11px;
+*{
+    font-family: 'Montserrat', sans-serif;
 }
 
-table {
+.headerWrapper {
     width: 100%;
-    table-layout:fixed;
-    word-break: break-all;
+    height: 55px;
+    background-color: #42b549;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
 }
 
-.div {
-    max-width: 100%;
+.headerLogo {
+    width: 40px;
+    height: 40px;
+    padding: 7.5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.searchBoxWrapper {
+    width: 83%;
+    height: 40px;
+    padding: 7.5px 7.5px 7.5px 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.searchSubBox {
+    width: 100%;
+    height: 40px;
+    display: block;
+}
+
+.searchSubBox input {
+    width: 100%;
+    height: 40px;
+    box-shadow: none;
+    padding: 0 0 0 20px;
+    border: 0px;
+    border-radius: 8px!important;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.62);
+}
+
+.searchSubBox input:focus {
+    outline: none;
+}
+
+/* Search */
+.searchWrapper {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    margin: 70px auto 0;
+}
+
+.loadmoreButton {
+    position: relative;
+    background-color: rgb(255, 87, 34);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 24px 1px;
+    margin: 0 0 20px 0;
+    padding: 16px;
+    border-radius: 4px;
+    overflow: hidden;
     text-align: center;
+    cursor: pointer;
+    color: white;
+    width: 100%;
+    border: none;
 }
 
-#profilepicturediv {
+/* Product Detail */
+.productDetailWrap {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.productDetailWrap .productInfo {
+    height: auto;
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+
+.productDetailWrap .productImages {
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.productDetailWrap .productName {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.29;
+    position: relative;
+    word-break: break-word;
+    height: auto;
+    color: #000;
+    overflow: hidden;
+    margin: 10px 0 0;
+}
+
+.productDetailWrap .productPrice {
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+    color: #000;
+}
+
+.productDetailWrap .buyButton {
+    position: relative;
+    background-color: rgb(255, 87, 34);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 24px 1px;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 4px;
+    overflow: hidden;
     text-align: center;
+    cursor: pointer;
+    color: white;
+    width: 150px;
+    border: none;
 }
 
-img { 
-    max-width: 25%; 
-    height: auto; 
+/* Product Cord */
+.cardContainer {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 24px 1px;
+    margin: 0 0 16px;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
-#profileimagediv {
-    height: 100px;
-    width: 100px;
+.cardContainer .cardInfo {
+    height: auto;
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 16px;
 }
 
-#contextinfo {
-    display: none;
+.cardContainer .cardImage {
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
 }
 
-#accesstokendata, #profileinfo {
-    display: none;
+.cardContainer .cardLink {
+    width: 100%;
+    display: block;
+    position: relative;
 }
 
-.buttongroup {
-    text-align: center;
+.cardContainer .cardName {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.29;
+    position: relative;
+    word-break: break-word;
+    height: auto;
+    color: #000;
+    overflow: hidden;
+    margin: 10px 0 0;
+    text-decoration: none;
+    font-weight: 600;
 }
 
-button {
-    margin: 4px;
+#progressContainer {
+    padding: 0 16px;
+}
+
+.action-group {
+    display: flex !important;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+#add-button {
+    display: flex;
+    background: orange;
+    padding: 0 24px;
+    font-weight: 700;
+    border: 0;
+    color: white;
+}
+
+#value-field {
+    display: flex;
+    flex-grow: 1;
+    border: 1px solid lightgray;
+    padding: 12px;
+    margin-right: 8px;
+}
+
+.cardContainer .brandName {
+    display: block;
+    font-size: 12px;
+    font-weight: 300;
+    position: relative;
+    word-break: break-word;
+    height: auto;
+    color: #333;
+    overflow: hidden;
+    margin: 5px 0 10px;
+    text-decoration: none!important;
+}
+
+.cardContainer .cardPrice {
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    color: #000;
+    margin-top: 8px;
 }

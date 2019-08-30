@@ -2,87 +2,67 @@ window.onload = function (e) {
     liff.init(function (data) {
         initializeApp(data);
     });
+    $("#add-button").click(() => {
+        const value = $("#value-field").val();
+        fetch(`${baseUrl}/add_fund?id=${investmentId}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                line_id: userId,
+                amount: parseInt(value)
+            })
+        }).then(result => liff.closeWindow())
+    });
 };
 
+const baseUrl = "https://investpedia.herokuapp.com";
+let userId;
+let investmentId;
+
 function initializeApp(data) {
-    document.getElementById('languagefield').textContent = data.language;
-    document.getElementById('viewtypefield').textContent = data.context.viewType;
-    document.getElementById('useridfield').textContent = data.context.userId;
-    document.getElementById('utouidfield').textContent = data.context.utouId;
-    document.getElementById('roomidfield').textContent = data.context.roomId;
-    document.getElementById('groupidfield').textContent = data.context.groupId;
+    userId = data.context.userId;
+    const searchParam = new URLSearchParams(location.search);
+    investmentId = searchParam.get("id");
 
-    // openWindow call
-    document.getElementById('openwindowbutton').addEventListener('click', function () {
-        liff.openWindow({
-            url: 'https://line.me'
-        });
-    });
-
-    // closeWindow call
-    document.getElementById('closewindowbutton').addEventListener('click', function () {
-        liff.closeWindow();
-    });
-
-    // sendMessages call
-    document.getElementById('sendmessagebutton').addEventListener('click', function () {
-        liff.sendMessages([{
-            type: 'text',
-            text: "You've successfully sent a message! Hooray!"
-        }, {
-            type: 'sticker',
-            packageId: '2',
-            stickerId: '144'
-        }]).then(function () {
-            window.alert("Message sent");
-        }).catch(function (error) {
-            window.alert("Error sending message: " + error);
-        });
-    });
-
-    // get access token
-    document.getElementById('getaccesstoken').addEventListener('click', function () {
-        const accessToken = liff.getAccessToken();
-        document.getElementById('accesstokenfield').textContent = accessToken;
-        toggleAccessToken();
-    });
-
-    // get profile call
-    document.getElementById('getprofilebutton').addEventListener('click', function () {
-        liff.getProfile().then(function (profile) {
-            document.getElementById('useridprofilefield').textContent = profile.userId;
-            document.getElementById('displaynamefield').textContent = profile.displayName;
-
-            const profilePictureDiv = document.getElementById('profilepicturediv');
-            if (profilePictureDiv.firstElementChild) {
-                profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
-            }
-            const img = document.createElement('img');
-            img.src = profile.pictureUrl;
-            img.alt = "Profile Picture";
-            profilePictureDiv.appendChild(img);
-
-            document.getElementById('statusmessagefield').textContent = profile.statusMessage;
-            toggleProfileData();
-        }).catch(function (error) {
-            window.alert("Error getting profile: " + error);
-        });
-    });
+    fetch(`${baseUrl}/investment?id=${investmentId}`)
+        .then(result => result.json())
+        .then(data => renderInvestmentData(data))
 }
 
-function toggleAccessToken() {
-    toggleElement('accesstokendata');
-}
-
-function toggleProfileData() {
-    toggleElement('profileinfo');
-}
-
-function toggleElement(elementId) {
-    const elem = document.getElementById(elementId);
-    if (elem.offsetWidth > 0 && elem.offsetHeight > 0) {
-        elem.style.display = "none";
+function renderInvestmentData(data) {
+    let imageUrl;
+    if (data.investment.product) {
+        imageUrl = data.investment.product.ImageURL;
     } else {
-        elem.style.display = "block";
+        imageUrl = "https://www.unilever.co.id/id/Images/Keluarga-Bahagia-Gendong-Anak_tcm1310-496010_w720.jpg"
     }
+    var bar = new ProgressBar.Line(progressContainer, {
+        strokeWidth: 4,
+        easing: 'easeInOut',
+        duration: 1400,
+        color: '#FFEA82',
+        trailColor: '#eee',
+        trailWidth: 1,
+        svgStyle: {width: '100%', height: '20px'},
+        from: {color: '#FFEA82'},
+        to: {color: '#ED6A5A'},
+        step: (state, bar) => {
+            bar.path.setAttribute('stroke', state.color);
+        }
+    });
+    $("#investment-content").append(
+        `
+                <a class="cardLink" href="">
+                    <img class="cardImage" alt="/detail.html?"
+                         src="${imageUrl}" />
+                </a>
+                <div class="cardInfo">
+                    <h1 class="cardName">${data.investment.Name}</h1>
+                </div>
+        `
+    );
+    bar.animate(data.investment.Current / data.investment.Goal);
 }
