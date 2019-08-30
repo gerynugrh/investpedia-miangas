@@ -2,6 +2,14 @@ window.onload = function (e) {
     liff.init(function (data) {
         initializeApp(data);
     });
+    
+    const searchParam = new URLSearchParams(location.search);
+    investmentId = searchParam.get("id");
+
+    fetch(`${baseUrl}/investment?id=${investmentId}`)
+        .then(result => result.json())
+        .then(data => renderInvestmentData(data));
+
     $("#add-button").click(() => {
         const value = $("#value-field").val();
         fetch(`${baseUrl}/add_fund?id=${investmentId}`, {
@@ -24,12 +32,6 @@ let investmentId;
 
 function initializeApp(data) {
     userId = data.context.userId;
-    const searchParam = new URLSearchParams(location.search);
-    investmentId = searchParam.get("id");
-
-    fetch(`${baseUrl}/investment?id=${investmentId}`)
-        .then(result => result.json())
-        .then(data => renderInvestmentData(data))
 }
 
 function renderInvestmentData(data) {
